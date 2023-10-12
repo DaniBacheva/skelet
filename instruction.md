@@ -9,3 +9,6 @@ config router
 install express-handlebars
  - config view engine
  -------------------
+  - add main layout
+  -fix hyperlinks styles
+  -add main layout
