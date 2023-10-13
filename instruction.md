@@ -15,11 +15,16 @@ install express-handlebars
   ---------------
   -trim all htmls - leave only <main> make them hbs
   -group views in folders
- add controller folder - home controller
+ Add controller folder - home controller
  ----------------
- add data base
+ Add data base
  install mongoose, connetct to DB
- authentication
-  - user controller
+User functionality
+  - user controller, add it to routes\
+ - fix navigation(login register, logout
+ -------------------------
+ -render login register+Post
+ ------------------------
+ Add user Model - validation in schema
 
   
