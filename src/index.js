@@ -2,7 +2,8 @@ const express = require ('express');
 const path = require  ('path');
 const handlebars = require("express-handlebars");
 const routes = require('./router');
-const mongoose = require ('mongoose')
+const mongoose = require ('mongoose');
+const cookieParser = require('cookie-parser');
 
 const PORT = 5050;
 //app init
@@ -11,6 +12,7 @@ const app = express();
 //express config
 app.use(express.static(path.resolve(__dirname, "./public")));
 app.use(express.urlencoded({ extended: false}));
+app.use(cookieParser);
 
 //handlebars congig
 app.engine("hbs", handlebars.engine({ extname : "hbs"}));

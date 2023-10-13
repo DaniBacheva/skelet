@@ -37,5 +37,7 @@ Generate JWT
 install JWT, promisify JWT, generate SECRET
 generate token
 
+Install cookis parser - config, set cookie with token
+Logout page
 
   
