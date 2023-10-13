@@ -7,7 +7,7 @@ const userSchema = new mongoose.Schema ({
     password:{ type:String, required: true},
 });
 
-userSchema.virtual('repeatPasswor')
+userSchema.virtual('repeatPassword')
 .set(function(value) {
     if(value !== this.password) {
         throw new mongoose.MongooseError("Passwords mismatch")

@@ -21,10 +21,12 @@ install express-handlebars
  install mongoose, connetct to DB
 User functionality
   - user controller, add it to routes\
- - fix navigation(login register, logout
+ - fix navigation(login register, logout)
  -------------------------
  -render login register+Post
  ------------------------
  Add user Model - validation in schema
+ -add method to register - record in DB
+ virtual(password, repeatPassword match ?)
 
   
