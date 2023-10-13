@@ -8,7 +8,7 @@ foder public, views
 config router
 install express-handlebars
  - config view engine
- -------------------
+ -------------------we4e s aktualni failowe
   - add main layout
-  -fix hyperlinks styles
-  -add main layout
+  -fix public styles ostawa samo /css/site.css
+  
