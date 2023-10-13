@@ -12,8 +12,14 @@ install express-handlebars
   - add main layout
   -fix public styles ostawa samo /css/site.css
   -render home page in hbs
+  ---------------
   -trim all htmls - leave only <main> make them hbs
   -group views in folders
-add controller folder
+ add controller folder - home controller
+ ----------------
+ add data base
+ install mongoose, connetct to DB
+ authentication
+  - user controller
 
   
