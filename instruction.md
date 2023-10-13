@@ -28,5 +28,14 @@ User functionality
  Add user Model - validation in schema
  -add method to register - record in DB
  virtual(password, repeatPassword match ?)
+ validate email unique???????
+
+ Add hash to password - i bcrypt, hash password
+Login - find user(email, ), validate paswword
+
+Generate JWT
+install JWT, promisify JWT, generate SECRET
+generate token
+
 
   

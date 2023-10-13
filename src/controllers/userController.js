@@ -20,9 +20,9 @@ router.get('/login', (req,res)=> {
     res.render('users/login')
 });
 
-router.post ('/login', (req, res) => {
+router.post ('/login', async (req, res) => {
     const { email, password} = req.body;
-
+ await userManager.login(email, password)
     console.log(req.body)
 res.redirect('/')
 
