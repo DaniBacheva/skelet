@@ -18,11 +18,6 @@ app.set("views", "src/views");
 
 
 //routes
-app.get("/", (req,res)=> {
-    //res.send("hi")
-   res.render("home")
-});
-
-app.use(routes)
+app.use(routes);
 
 app.listen(PORT, ()=> console.log(`Server is listening on port ${PORT}...`));

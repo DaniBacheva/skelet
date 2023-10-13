@@ -11,4 +11,9 @@ install express-handlebars
  -------------------we4e s aktualni failowe
   - add main layout
   -fix public styles ostawa samo /css/site.css
+  -render home page in hbs
+  -trim all htmls - leave only <main> make them hbs
+  -group views in folders
+add controller folder
+
   
