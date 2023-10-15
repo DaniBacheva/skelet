@@ -9,15 +9,18 @@ router.get('/register', (req, res) => {
 router.post('/register', async (req, res) => {
     const { firstName, lastName, email, password, repeatPassword } = req.body;
 
-   try {
-        await userManager.register({ firstName, lastName, email, password, repeatPassword });
-        res.redirect('/users/login');
-   }
+    try {
+        const token = await userManager.register({ firstName, lastName, email, password, repeatPassword });
+
+        console.log(token);
+        res.cookie('token', token, { httpOnly: true });
+        res.redirect('/');
+    }
     catch (error) {
-      const errorMessages = extractErrorMsgs(error);
+        const errorMessages = extractErrorMsgs(error);
         console.log(error)
-    res.status(404).render("users/register", { errorMessages });
-   }
+        res.status(404).render("users/register", { errorMessages });
+    }
 });
 
 router.get('/login', (req, res) => {
