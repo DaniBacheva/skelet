@@ -44,6 +44,13 @@ Auth middleware- folder middleware, import auth in express config after cookiePa
    provide authorization
 
 Dynamic navigation - conditinal options in nav
-  
+  add data to res localls for hbs templates
+
+ Error handling-add 404 page, redirect missing routes to it
+ -add global error handler, add error message
+
+Error message - show in main layout
+pass error to render in login and register page
+
 
   

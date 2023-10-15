@@ -12,7 +12,7 @@ const userSchema = new mongoose.Schema ({
 userSchema.virtual('repeatPassword')
 .set(function(value) {
     if(value !== this.password) {
-        throw new mongoose.MongooseError("Passwords mismatch")
+        throw new Error("Passwords mismatch")
     }
 });
 
@@ -23,6 +23,7 @@ userSchema.pre('save', async function(){
 const User = mongoose.model("User", userSchema);
 
 module.exports = User;
+
         
 
 
