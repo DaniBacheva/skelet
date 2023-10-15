@@ -39,5 +39,11 @@ generate token
 
 Install cookis parser - config, set cookie with token
 Logout page
+Auth middleware- folder middleware, import auth in express config after cookieParser
+  decode the token, handle invalid token
+   provide authorization
+
+Dynamic navigation - conditinal options in nav
+  
 
   
