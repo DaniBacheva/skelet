@@ -1,8 +1,10 @@
 const router = require("express").Router();
 const creatureManager = require('../managers/creatureManager')
 
-router.get('/', (req,res) => {
-    res.render('posts/all')
+router.get('/', async  (req,res) => {
+    const creatures = await creatureManager.getAll().lean();
+    console.log({creatures})
+    res.render('posts/all', {creatures});
 });
 
 router.get('/create', (req,res)=> {
