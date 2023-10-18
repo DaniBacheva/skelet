@@ -44,10 +44,11 @@ router.get('/:creatureId/details', async (req, res) => {
     const creature = await creatureManager.getSingleCreature(creatureId).lean();
     const { user } = req;
     const { owner } = creature;
-    const isOwner = user?._id===owner.toString()
+    const isOwner = user?._id===owner.toString();
+    const alreadyVoted = creature.votes?.some((v)=>v?.toString()===user?._id);
 
         console.log({ creature });
-    res.render(`posts/details`, { creature, isOwner })
+    res.render(`posts/details`, { creature, isOwner, alreadyVoted })
 });
 
 router.get('/:creatureId/edit', async (req,res) => {
@@ -80,5 +81,16 @@ router.get('/:creatureId/delete',async  (req,res)=> {
 
     res.redirect('/posts/')
 });
+
+
+router.get('/:creatureId/vote',async (req,res)=> {
+    const {creatureId} = req.params;
+    const {_id } = req.user;
+
+    const creature = await creatureManager.addVotes(creatureId, _id);
+    
+    res.redirect(`/posts/${creatureId}/details`)
+}
+)
 
 module.exports = router;
