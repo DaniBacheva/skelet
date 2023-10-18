@@ -11,8 +11,14 @@ router.get('/create', (req, res) => {
     res.render("posts/create")
 });
 
-router.get("/profile", (req, res) => {
-    res.render("posts/profile")
+router.get("/profile", async (req, res) => {
+const {user} = req;
+console.log(user);
+
+const myCreatures = await creatureManager.getMyCreatures(user?._id).lean();
+console.log({myCreatures})
+
+    res.render("posts/profile", {myCreatures})
 });
 
 router.post("/create", async (req, res) => {
