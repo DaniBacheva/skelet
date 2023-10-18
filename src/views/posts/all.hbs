@@ -2,6 +2,7 @@
     <section id="catalog">
         <h1>All posts</h1>
         <div class="band">
+            {{#if creatures}}
             {{#each creatures}}
             <!-- If there are posts for creature in the database display each of them -->
             <div class="flip flip-vertical">
@@ -12,14 +13,16 @@
                     <h1>{{name}}</h1>
                     <h2>Species: {{species}}</h2>
                     <p>Description:{{description}}. </p>
-                    <a href="/" class="details">Details</a>
+                    <a href="/posts/{{_id}}/details" class="details">Details</a>
                 </div>
             </div>
             {{/each}}
-            <!-- If there are still no posts in the database display: -->
-            <!-- <div class="no-posts">
-                        <p class="no-offer">There are no posts yet...</p>
-                    </div> -->
+            {{else}}
+
+            <div class="no-posts">
+                <p class="no-offer">There are no posts yet...</p>
+            </div> -->
+            {{/if}}
         </div>
     </section>
 </main>

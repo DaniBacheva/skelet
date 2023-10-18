@@ -2,7 +2,7 @@ const router = require("express").Router();
 const creatureManager = require('../managers/creatureManager')
 
 router.get('/', async  (req,res) => {
-    const creatures = await creatureManager.getAll().lean();
+    const creatures =await creatureManager.getAll().lean();
     console.log({creatures})
     res.render('posts/all', {creatures});
 });
@@ -30,6 +30,15 @@ router.post("/create", async (req,res)=> {
 
     console.log(req.body)
      res.redirect ('/posts/')
+});
+
+router.get('/:creatureId/details', async (req,res)=> {
+
+    const creatureId = req.params.creatureId;
+ 
+    const creature = await creatureManager.getSingleCreature(creatureId).lean();
+       console.log({creature});
+    res.render(`posts/details`, { creature})
 })
 
 module.exports = router;
