@@ -68,10 +68,11 @@ router.post('/:creatureId/edit', async (req,res)=> {
 })
 
 
-router.get('/:creatureId/delete', (req,res)=> {
+router.get('/:creatureId/delete',async  (req,res)=> {
     const {creatureId} = req.params;
+    await creatureManager.delete(creatureId);
 
-res.redirect('posts/')
+    res.redirect('/posts/')
 });
 
 module.exports = router;
