@@ -42,13 +42,15 @@ router.get('/:creatureId/details', async (req, res) => {
 
     const creatureId = req.params.creatureId;
     const creature = await creatureManager.getSingleCreature(creatureId).lean();
+
     const { user } = req;
     const { owner } = creature;
     const isOwner = user?._id===owner.toString();
-    const alreadyVoted = creature.votes?.some((v)=>v?.toString()===user?._id);
+    const alreadyVoted = creature.votes?.some((v)=>v?._id.toString()===user?._id);
+    const emailVoted = creature.votes.map(v=>v.email).join(', ')
 
         console.log({ creature });
-    res.render(`posts/details`, { creature, isOwner, alreadyVoted })
+    res.render(`posts/details`, { creature, isOwner, alreadyVoted, emailVoted })
 });
 
 router.get('/:creatureId/edit', async (req,res) => {
