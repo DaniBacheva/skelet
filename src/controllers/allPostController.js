@@ -1,5 +1,7 @@
 const router = require("express").Router();
-const creatureManager = require('../managers/creatureManager')
+const creatureManager = require('../managers/creatureManager');
+const { isAuth } = require('../middleware/authMiddleware');
+const { extractErrorMsgs } = require('../util/errorHandler');
 
 router.get('/', async (req, res) => {
     const creatures = await creatureManager.getAll().lean();
@@ -11,14 +13,14 @@ router.get('/create', (req, res) => {
     res.render("posts/create")
 });
 
-router.get("/profile", async (req, res) => {
-const {user} = req;
-console.log(user);
+router.get("/profile", isAuth, async (req, res) => {
+    const { user } = req;
+    console.log(user);
 
-const myCreatures = await creatureManager.getMyCreatures(user?._id).lean();
-console.log({myCreatures})
+    const myCreatures = await creatureManager.getMyCreatures(user?._id).lean();
+    //console.log({myCreatures})
 
-    res.render("posts/profile", {myCreatures})
+    res.render("posts/profile", { myCreatures })
 });
 
 router.post("/create", async (req, res) => {
@@ -32,10 +34,17 @@ router.post("/create", async (req, res) => {
 
     const payload = { name, species, skinColor, eyeColor, image, description, owner: req.user };
 
-    await creatureManager.create(payload);
+    try {
+        await creatureManager.create(payload);
 
-    console.log(req.body)
-    res.redirect('/posts/')
+        console.log(req.body)
+        res.redirect('/posts/');
+    }
+    catch (error) {
+        const errorMessages = extractErrorMsgs(error);
+        console.log(error)
+        res.status(404).render("posts/create", { errorMessages });
+    }
 });
 
 router.get('/:creatureId/details', async (req, res) => {
@@ -45,24 +54,24 @@ router.get('/:creatureId/details', async (req, res) => {
 
     const { user } = req;
     const { owner } = creature;
-    const isOwner = user?._id===owner.toString();
-    const alreadyVoted = creature.votes?.some((v)=>v?._id.toString()===user?._id);
-    const emailVoted = creature.votes.map(v=>v.email).join(', ')
+    const isOwner = user?._id === owner.toString();
+    const alreadyVoted = creature.votes?.some((v) => v?._id.toString() === user?._id);
+    const emailVoted = creature.votes.map(v => v.email).join(', ')
 
-        console.log({ creature });
+    console.log({ creature });
     res.render(`posts/details`, { creature, isOwner, alreadyVoted, emailVoted })
 });
 
-router.get('/:creatureId/edit', async (req,res) => {
-    const {creatureId} = req.params;
+router.get('/:creatureId/edit', async (req, res) => {
+    const { creatureId } = req.params;
     const creature = await creatureManager.getSingleCreature(creatureId).lean();
 
-    res.render('posts/edit', { creature})
+    res.render('posts/edit', { creature })
 
 });
 
-router.post('/:creatureId/edit', async (req,res)=> {
-    const {creatureId} = req.params;
+router.post('/:creatureId/edit', async (req, res) => {
+    const { creatureId } = req.params;
     const {
         name,
         species,
@@ -72,25 +81,33 @@ router.post('/:creatureId/edit', async (req,res)=> {
         description } = req.body;
 
     const payload = { name, species, skinColor, eyeColor, image, description, owner: req.user };
-    await creatureManager.update(creatureId, payload);
-    res.redirect(`/posts/${creatureId}/details`)
+
+    try {
+        await creatureManager.update(creatureId, payload);
+        res.redirect(`/posts/${creatureId}/details`);
+    }
+    catch (error) {
+        const errorMessages = extractErrorMsgs(error);
+        console.log(error)
+        res.status(404).render("posts//:creatureId/edit", { errorMessages });
+    }
 })
 
 
-router.get('/:creatureId/delete',async  (req,res)=> {
-    const {creatureId} = req.params;
+router.get('/:creatureId/delete', async (req, res) => {
+    const { creatureId } = req.params;
     await creatureManager.delete(creatureId);
 
     res.redirect('/posts/')
 });
 
 
-router.get('/:creatureId/vote',async (req,res)=> {
-    const {creatureId} = req.params;
-    const {_id } = req.user;
+router.get('/:creatureId/vote', async (req, res) => {
+    const { creatureId } = req.params;
+    const { _id } = req.user;
 
     const creature = await creatureManager.addVotes(creatureId, _id);
-    
+
     res.redirect(`/posts/${creatureId}/details`)
 }
 )
